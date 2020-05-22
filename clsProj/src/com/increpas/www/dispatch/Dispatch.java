@@ -18,6 +18,7 @@ import com.increpas.www.controller.ClsController;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 @WebServlet("*.cls") // URL 패턴지정
@@ -90,16 +91,25 @@ public class Dispatch extends HttpServlet {
 		System.out.println("############# realPath : " + realPath);
 		// 4. 요청내용을 알아냈으니 실제 실행할 클래스를 가져온다.
 		ClsController cls = map.get(realPath);
+		
+		req.setAttribute("reDirect", false);
 		String view = cls.exec(req, resp);
-		boolean bool = false;
-		bool = (boolean) req.getAttribute("reDirect");
-		if(bool) {
+		
+		Boolean bool ;
+		try {
+			bool = (boolean) req.getAttribute("reDirect");			
+		}catch(Exception e) {
+			bool = null;
+		}
+		
+		if(bool == null) { 
+			PrintWriter pw = resp.getWriter();
+			try {
+				pw.println(view);
+			}catch(Exception e) {}
+		} else if(bool == true) {
 			resp.sendRedirect(view);
-		
 		} else {
-			
-		
-		
 		try {
 			RequestDispatcher rd = req.getRequestDispatcher(view);
 			rd.forward(req, resp);

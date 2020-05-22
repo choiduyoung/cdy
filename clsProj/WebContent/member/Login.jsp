@@ -43,22 +43,13 @@
 			
 
 			$('#frm').attr('method','POST'); 
-			$('#frm').attr('action','./LoginProc.cls2');
+			$('#frm').attr('action','/clsProj/member/loginProc.cls');
 			$('#frm').submit();
 			});
+		$('#hbtn').click(function(){
+			$(location).attr('href', '/clsProj/main/main.cls');
+		});
 		
-		<%
-			String sid = (String)session.getAttribute("SID");
-		%>
-
-		//로그인 여부에 따른 처리
-		var sid = '<%=sid%>';
-		alert(typeof sid);
-		if(sid != 'null' && sid.length !=0){
-			$('#loginWin').css('display', 'none');
-			$('#msg').html(sid);
-			$('#msgWin').css('display', '');
-		}
 	});
 </script>
 </head>
@@ -71,11 +62,11 @@
 			<div class="w3-col w3-margin-top w3-border pdtnb10 w3-card w3-round">
 				<div class="w3-col mgb10">
 					<label class="w3-col m2 mgl5" for="id">I D :</label>
-					<input class="w3-col m9" id="id"name="id">
+					<input class="w3-col m9" id="id" name="id">
 				</div>
 				<div class="w3-col">
 					<label class="w3-col m2 mgl5" for="pw">P W :</label>
-					<input class="w3-col m9" type="password"id="pw"name="pw">
+					<input class="w3-col m9" type="password" id="pw" name="pw">
 				</div>
 			</div>
 			<div class="w3-col w3-margin-top w3-card">

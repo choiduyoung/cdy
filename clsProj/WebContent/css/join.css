@@ -1,0 +1,57 @@
+h4 {
+   margin: 0px;
+   padding: 0px;
+}
+
+.mxw {
+   max-width: 647px;
+   min-width: 647px;
+}
+
+.infrm {
+   display: inline-block;
+   width: 79%;
+}
+
+.input1 {
+   width: 96%;
+}
+
+.input2 {
+   width: 73%;
+}
+
+.ttl {
+   display: inline-block;
+   text-align: right;
+   width: 20%;
+}
+
+.idck {
+   text-decoration: none;
+}
+
+.btn {
+   height: 28px;
+   position: relative;
+   top: -2px;
+}
+
+.imgbox {
+   max-width: 120px;
+   max-height: auto;
+}
+
+.avtbox2 {
+   max-width: 100px;
+   max-height: auto;
+}
+
+.phidden {
+   display: none;
+}
+
+.radiobox {
+   width: 16px;
+   height: 16px;
+}

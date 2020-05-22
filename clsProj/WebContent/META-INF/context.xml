@@ -9,7 +9,7 @@
 		maxWaitMillis="10000"
 		username="hello"
 		password="hello"
-		diverClassName="oracle.jdbc.driver.OracleDriver"
+		driverClassName="oracle.jdbc.driver.OracleDriver"
 		url="jdbc:oracle:thin:@localhost:1521:orcl"
 	/>
 </Context>

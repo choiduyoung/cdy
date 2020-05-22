@@ -5,8 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Test</title>
-<link rel="stylesheet" href="../css/w3.css" />
-<script type="text/javascript" src="../js/jquery-3.5.0.min.js"></script>
+<link rel="stylesheet" href="/clsProj/css/w3.css" />
+<link rel="stylesheet" href="/clsProj/css/join.css" />
+<script type="text/javascript" src="/clsProj/js/jquery-3.5.0.min.js"></script>
 <style>
 	.dnone {
 		display: none;
@@ -21,12 +22,12 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#m').click(function(){
-			$('#avt, #mavt').removeClass('dnone');
-			$('#favt').addClass('dnone');
+			$('#avt, #avtgenM').removeClass('dnone');
+			$('#avtgenM').addClass('dnone');
 		});
 		$('#f').click(function(){
-			$('#avt, #favt').removeClass('dnone');
-			$('#mavt').addClass('dnone');
+			$('#avt, #avtgenF').removeClass('dnone');
+			$('#avtgenF').addClass('dnone');
 		});
 
 		$('#file').change(function(e){
@@ -36,6 +37,10 @@
 			$('#imgf').removeClass('dnone');
 		});
 		
+		$('#btn2').click(function(){
+			//데이터 무결성 검사하고
+			$('#frm').submit();
+		});
 		/*
 			비동기 통신
 				==> 웹서비스에서 원칙은
@@ -88,40 +93,26 @@
 			var sid = $('#id').val();
 			if(sid){
 				$.ajax({
-					url: '../id.check',
+					url: '/clsProj/member/id.ck',
 					type: 'post',
 					dataType: 'json',
 					data: {
 						'id': sid
 					},
 					success: function(data){
-						alert('###########');
-						alert(data);
-						
-						var result = data.result;
-						var id = data.id;
-						var name = data.name;
-						var tel = data.tel;
-						var mail = data.mail;
-						alert(id +'  ' + name);
-						if(result == 'ok'){
+						var result = data.cnt;
+						if(result == 0){
 							// 아이디를 사용가능한 경우
-							$('#idmsg').css('color', 'blue');
 							$('#idmsg').text('### 사용할 수 있는 아이디 입니다. ###');
-							$('#idmsg').removeClass('dnone');
+							$('#idmsg').css('color', 'blue');
+							$('#idmsg').css('display', '');
 						} else {
 							// 아이디가 사용불가능한 경우
-							$('#idmsg').css('color', 'red');
 							$('#idmsg').text('### 사용할 수 없는 아이디 입니다. ###');
-							$('#idmsg').removeClass('dnone');
+							$('#idmsg').css('color', 'red');
+							$('#idmsg').css('display', '');
 							$('#id').val('');
-							$('#id').focus();
-							$('#idCont').css('display', '');
-							$('#getId').text(id);
-							$('#getName').text(name);
-							$('#getTel').text(tel);
-							$('#getMail').text(mail);
-							
+							$('#id').focus();	
 						}
 					},
 					error: function(){
@@ -133,118 +124,163 @@
 				return;
 			}
 		});
+			$('#hbtn').click(function(){
+				$(location).attr('href','/clsProj/main/main.cls');
+		});
 	});
 </script>
 </head>
 <body>
-	<div class="w3-col l3 m3"><p></p></div>
-	<div class="w3-col l6 m6 s12 w3-margin-bottom">
-		<div class="w3-col w3-padding w3-margin-top w3-blue w3-card" id="logo"><h3 class="w3-center">Increpas Join</h3></div>
-		<form class="w3-col w3-padding w3-margin-top w3-border w3-card" method="post" action="" name="frm" id="frm">
-			<div class="w3-margin-top w3-row">
-				<label class="w3-col m2 w3-right-align" for="id">I D : </label>
-				<div class="w3-col m7 w3-margin-left">
-					<input class="w3-col m12" type="text" name="id" id="id">
-				</div>
-				<div class="w3-col m2 w3-button w3-tiny w3-red w3-round w3-center" id="idck">중복확인</div>
-				<p class="w3-col w3-center dnone" id="idmsg"></p>
-				<div class="w3-col w3-center" id="idCont" style="display: none;">
-					<h4 class="w3-col m6">I D :</h4><h4 class="w3-col m6" id="getId"></h4>
-					<h4 class="w3-col m6">NAME :</h4><h4 class="w3-col m6" id="getName"></h4>
-					<h4 class="w3-col m6">TEL :</h4><h4 class="w3-col m6" id="getTel"></h4>
-					<h4 class="w3-col m6">MAIL :</h4><h4 class="w3-col m6" id="getMail"></h4>
-				</div>
-				<!-- 
-					문제 ]
-						아이디 체크 버튼을 클릭했을 경우
-						입력한 아이디가 존재하면 해당 아이디의 정보를 조회해서
-						idCont태그에 추가하고 보여주세요
-				 -->
-			</div>
-			<div class="w3-margin-top w3-row">
-				<label class="w3-col m2 w3-right-align" for="pw">P W : </label>
-				<div class="w3-col m9 w3-margin-left">
-					<input class="w3-col m12" type="password" name="pw" id="pw">
-				</div>
-			</div>
-			<div class="w3-margin-top w3-row">
-				<label class="w3-col m2 w3-right-align" for="repw">PW Check : </label>
-				<div class="w3-col m9 w3-margin-left">
-					<input class="w3-col m12" type="password" name="repw" id="repw">
-				</div>
-			</div>
-			<div class="w3-margin-top w3-row">
-				<label class="w3-col m2 w3-right-align" for="name">이  름 : </label>
-				<div class="w3-col m9 w3-margin-left">
-					<input class="w3-col m12" type="text" name="name" id="name">
-				</div>
-			</div>
-			<div class="w3-margin-top w3-row">
-				<label class="w3-col m2 w3-right-align" for="mail">메  일 : </label>
-				<div class="w3-col m5 w3-margin-left">
-					<input class="w3-col m12" type="email" name="mail" id="mail">
-				</div>
-				<div class="w3-col m2 w3-right-align">@increpas.com</div>
-			</div>
-			<div class="w3-margin-top w3-row">
-				<label class="w3-col m2 w3-right-align" for="birth">생  일 : </label>
-				<div class="w3-col m9 w3-margin-left">
-					<input class="w3-col m12" type="date" name="birth" id="birth">
-				</div>
-			</div>
-			<div class="w3-margin-top w3-row">
-				<div class="w3-col m2 w3-right-align">성 별 : </div>
-				<div class="w3-col m5 w3-center">
-					<label for="m">남자</label>
-					<input type="radio" name="gen" id="m">
-				</div>
-				<div class="w3-col m5 w3-center">
-					<label for="f">여자</label>
-					<input type="radio" name="gen" id="f">
-				</div>
-			</div>
-			<div class="w3-content w3-margin dnone" id="avt">
-				<div class="w3-content w3-center" id="mavt">
-					<div class="w3-col m3 w3-margin avtmxw" id="mavtf1">
-						<label for="mavt1"><img style="width: 100%; height: auto;" src="../img/img_avatar1.png" class="w3-image"></label>
-						<input type="radio" name="mavt" id="mavt1">
-					</div>
-					<div class="w3-col m3 w3-margin avtmxw" id="mavtf2">
-						<label for="mavt2"><img style="width: 100%; height: auto;" src="../img/img_avatar2.png" class="w3-image"></label>
-						<input type="radio" name="mavt" id="mavt2">
-					</div>
-					<div class="w3-col m3 w3-margin avtmxw" id="mavtf3">
-						<label for="mavt3"><img style="width: 100%; height: auto;" src="../img/img_avatar3.png" class="w3-image"></label>
-						<input type="radio" name="mavt" id="mavt3">
-					</div>
-				</div>
-				<div class="w3-content w3-center" id="favt">
-					<div class="w3-col m3 w3-margin avtmxw" id="favtf1">
-						<label for="favt1"><img style="width: 100%; height: auto;" src="../img/img_avatar4.png" class="w3-image"></label>
-						<input type="radio" name="favt" id="favt1">
-					</div>
-					<div class="w3-col m3 w3-margin avtmxw" id="favtf2">
-						<label for="favt2"><img style="width: 100%; height: auto;" src="../img/img_avatar5.png" class="w3-image"></label>
-						<input type="radio" name="favt" id="favt2">
-					</div>
-					<div class="w3-col m3 w3-margin avtmxw" id="favtf3">
-						<label for="favt3"><img style="width: 100%; height: auto;" src="../img/img_avatar6.png" class="w3-image"></label>
-						<input type="radio" name="favt" id="favt3">
-					</div>
-				</div>
-			</div>
-			<div class="w3-row w3-margin">
-				<label class="w3-col m2 w3-right-align" for="file">프로필 : </label>
-				<input type="file" id="file" name="file" accept="image/*">
-			</div>
-			<div class="w3-content imgmxw dnone" id="imgf">
-				<img style="width: 100%; height: auto;" id="img">
-			</div>
-		</form>
-		<div class="w3-margin-top w3-col">
-			<div class="w3-col m6 w3-button w3-green">HOME</div>
-			<div class="w3-col m6 w3-button w3-blue">회원가입</div>
-		</div>
-	</div>
+<body>
+   <div class="w3-col m3"><p></p></div>
+   <div class="w3-col m6 mxw">
+      <header class="w3-row  w3-blue w3-card-4 w3-bo">
+         <h4 class="w3-left w3-padding w3-margin">Increpas Join check</h4>
+      </header>
+      <hr class="w3-border-bottom">
+      <div class="w3-row w3-padding w3-card mxv">
+         <form action="/clsProj/member/joinProc.cls" method="POST" id="frm" encType="multipart/form-data">
+            <div class=" w3-padding">            
+               <label class="ttl" for="id"> 회 원 이름 :</label>
+               <div class="infrm">
+                   <input type="text" name="name" id="name" class="input1">               
+               </div>
+            </div>
+            <div class="w3-padding">            
+               <label class=" ttl"for="id"> I D :</label>
+               <div class="infrm">
+                   <input type="text" name="id" id="id" class="input2">
+                   <div class="w3-button w3-red idck btn "id="idck"> ID Check</div>            
+                  <p class="w3-col w3-center" id="idmsg" style="display:none;"></p>
+                  <div class="w3-col w3-center" id="idCont" style="display:none;">
+                     <h4 class="w3-col m6">I D : </h4><h4 class="w3-col m6" id="getId"></h4>
+                     <h4 class="w3-col m6">NAME : </h4><h4 class="w3-col m6" id="getName"></h4>
+                     <h4 class="w3-col m6">TEL : </h4><h4 class="w3-col m6" id="getTel"></h4>
+                     <h4 class="w3-col m6">MAIL : </h4><h4 class="w3-col m6" id="getMail"></h4>                  
+                  </div>
+               </div>
+            </div>
+            <div class="w3-padding">            
+               <label class=" ttl"for="pw"> 비밀번호 :</label>
+               <div class="infrm">
+                   <input type="password" name="pw" id="pw" class="input1">
+               </div>
+            </div>
+            <div class="w3-padding">            
+               <label class=" ttl"for="repw"> 비밀번호 확인 :</label>
+               <div class="infrm">
+                   <input type="password" name="repw" id="repw" class="input1">
+               </div>
+               <div class="w3-row w3-hide" id="gl1">
+                  <label class=" ttl" for="repw"><p></p></label>
+                  <small class="w3-hide" id="gl2"></small>
+               </div>
+            </div>
+            <div class=" w3-padding">            
+               <label class="ttl" for="email"> 이 메 일 :</label>
+               <div class="infrm">
+                   <input type="text" name="mail" id="mail" class="input1">               
+               </div>
+            </div>
+            <div class=" w3-padding">            
+               <label class="ttl" for="tel"> 전 화 번 호 :</label>
+               <div class="infrm">
+                   <input type="text" name="tel" id="tel" class="input1">               
+               </div>
+            </div>
+            <div class="w3-padding">            
+               <label class="ttl"for="file"> 프로필 사진 :</label>
+               <div class="infrm">
+                   <input type="file" name="file" id="file" class="input1">
+               </div>
+            </div>
+            <div class="w3-row">            
+               <div class="infrm w3-hide w3-margin-top w3-center" id="imgbox">
+                         <img src="#" id="img1" alt="Image"class="imgbox w3-padding w3-border w3-card">
+               </div>
+            </div>
+            <div class="w3-padding" style="position: relative; top: -7px;">            
+               <label class="ttl"for="gen"> 성  별 :</label>
+               <div class="infrm w3-center" style="position: relative; top: 7px;">
+                  <div class="w3-half w3-center">
+                      <input type="radio" name="gen" value="F" id="F" class="w3-radio"/> 여자 
+                  </div>
+                  <div class="w3-half w3-center">
+                      <input type="radio" name="gen" value="M" id="M" class="w3-radio"/> 남자
+                  </div>
+               </div>
+            </div>
+            <div class="w3-padding w3-hide" id="avtgenb">
+               <label class="ttl" style="position: relative;top: -10px"> 아바타 선택 : </label>
+               <div class="infrm w3-center ">
+                  <div class="w3-hide" id="avtgenM">
+                     <input class="w3-radio" type="radio" name="avt" value="11" />
+                     <img class="avtbox2 w3-margin-top" alt="image" src="../img/img_avatar1.png">                  
+                     <input class="w3-radio" type="radio" name="avt" value="12" />
+                     <img class="avtbox2 w3-margin-top" alt="image" src="../img/img_avatar2.png">
+                     <input class="w3-radio" type="radio" name="avt"   value="13"/>
+                     <img class="avtbox2 w3-margin-top" alt="image" src="../img/img_avatar3.png">                  
+                  </div>
+                  <div class="w3-hide" id="avtgenF">
+                     <input class="w3-radio" type="radio"  value="14"name="avt" />
+                     <img class="avtbox2 w3-margin-top" alt="image" src="../img/img_avatar4.png">                  
+                     <input class="w3-radio" type="radio" value="15" name="avt" />
+                     <img class="avtbox2 w3-margin-top" alt="image" src="../img/img_avatar5.png">
+                     <input class="w3-radio" type="radio" value="16" name="avt" />
+                     <img class="avtbox2 w3-margin-top" alt="image" src="../img/img_avatar6.png">                  
+                  </div>
+               </div>
+            </div>
+            <div class="w3-padding">
+               <label class="ttl" for="y"> 생년월일 :</label>
+               <div class="infrm w3-center">
+                  <input class="w3-center" type="date" name="birth" id="birth" style="width:92%;"/>
+               </div>
+            </div>
+         </form>   
+      </div>
+      <div class="w3-border w3-row w3-margin-top">
+         <div class="w3-half w3-button w3-red" id="btn1">Home</div>
+         <div class="w3-half w3-button w3-green" id="btn2">Submit</div>
+      </div>
+   </div>
 </body>
+<script type="text/javascript">
+document.getElementById('file').onchange = function(e) {
+
+    var form = this.value;
+    var check = form.slice(form.lastIndexOf('.') + 1);
+    check = check.toLowerCase(check);
+
+    if (check != 'png' && check != 'jpg' && check != 'jpeg' && check != 'gif') {
+       alert('파일형식을 확인하세요..');
+       document.getElementById('imgbox').classList.toggle('w3-hide');
+       this.value = '';
+       return;
+    }
+    var vfile = URL.createObjectURL(e.target.files[0]); 
+    // 배열로 저장하고 있다가 선택한 파일은
+    // 0번째 이기때문
+    document.getElementById('img1').setAttribute('src', vfile);
+    document.getElementById('imgbox').classList.remove('w3-hide');
+
+ };
+
+document.getElementById('F').onchange = function() {
+   var gen = this.value;
+   document.getElementById('avtgenb').classList.add('w3-hide');
+   document.getElementById('avtgenM').classList.add('w3-hide');
+   document.getElementById('avtgenb').classList.remove('w3-hide');
+   document.getElementById('avtgenF').classList.remove('w3-hide');
+};
+// 아바타 남자 구별
+document.getElementById('M').onchange = function() {
+   var gen = this.value;
+
+   document.getElementById('avtgenb').classList.add('w3-hide');
+   document.getElementById('avtgenF').classList.add('w3-hide');
+   document.getElementById('avtgenb').classList.remove('w3-hide');
+   document.getElementById('avtgenM').classList.remove('w3-hide');
+};
+</script>
 </html>
