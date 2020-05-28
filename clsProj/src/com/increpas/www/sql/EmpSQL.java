@@ -16,8 +16,8 @@ public class EmpSQL {
 		
 		case SEL_EMP_INFO :
 			buff.append("SELECT ");
-			buff.append("empno eno, ename neme, NVL(mgr, 0) mgr, hiredate gdate, sal, grade, NVL(To_CHAR(comm), 'none') comm, ");
-			buff.append("emp.deptno dno, dname, loc ");
+			buff.append("	empno eno, ename name, NVL(mgr, 0) mgr, hiredate hdate, sal, grade, NVL(To_CHAR(comm), 'none') comm, ");
+			buff.append("	emp.deptno dno, dname, loc ");
 			buff.append("FROM ");
 			buff.append("emp, dpt, salgrade ");
 			buff.append("WHERE ");

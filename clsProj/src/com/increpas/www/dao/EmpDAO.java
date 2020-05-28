@@ -52,11 +52,13 @@ public class EmpDAO {
 	public EmpVO getInfo(int eno) {
 		EmpVO eVO = new EmpVO();
 		//con
+		System.out.println("eno:!!!!"+eno);
 		con = db.getCon();
 		//sql
 		String sql = eSQL.getSQL(eSQL.SEL_EMP_INFO);
 		//pstmt
 		pstmt = db.getPSTMT(con, sql);
+		System.out.println("####sql : "+sql);
 		try {
 			//data insert
 			pstmt.setInt(1, eno);			
@@ -72,13 +74,14 @@ public class EmpDAO {
 			eVO.setSdate();
 			eVO.setSal(rs.getInt("sal"));
 			eVO.setGrade(rs.getInt("grade"));
-			eVO.setComm(rs.getString("conn"));
+			eVO.setComm(rs.getString("comm"));
 			eVO.setDno(rs.getInt("dno"));
 			eVO.setDname(rs.getString("dname"));
 			eVO.setLoc(rs.getString("loc"));
-			
+			System.out.println("Dao toString 22");
+			eVO.toString();
 		} catch(Exception e) {
-			
+			e.printStackTrace();
 		}finally {
 			db.close(rs);
 			db.close(pstmt);
@@ -88,5 +91,26 @@ public class EmpDAO {
 		// send 
 		
 		return eVO;
-	}
+	}/*
+	public String getDname(int eno) {
+		String str = "";
+		
+		con = db.getCon();
+		String sql = eSQL.getSQL(eSQL.SEL_EMP_DNAME);
+		pstmt = db.getPSTMT(con, sql);
+		try {
+			pstmt.setInt(1, eno);
+			rs = pstmt.executeQuery();
+			rs.next();
+			str = rs.getString("dname");
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(rs);
+			db.close(pstmt);
+			db.close(con);
+		}
+		
+		return str;
+	}*/
 }

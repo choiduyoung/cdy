@@ -84,5 +84,11 @@ public class EmpVO {
 	public void setHtime(Time htime) {
 		this.htime = htime;
 	}
+	@Override
+	public String toString() {
+		return "EmpVO [eno=" + eno + ", dno=" + dno + ", mgr=" + mgr + ", sal=" + sal + ", grade=" + grade + ", name="
+				+ name + ", comm=" + comm + ", dname=" + dname + ", loc=" + loc + ", sdate=" + sdate + ", hdate="
+				+ hdate + ", htime=" + htime + "]";
+	}
 	
 }

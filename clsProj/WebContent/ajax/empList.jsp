@@ -20,14 +20,18 @@ $(document).ready(function(){
 		
 		//우리는 버튼마다 아디 값을 다르게 설정을 햇으므로 아디디 값을 읽어온다
 		var tid = $(this).attr('id');
+		alert(tid);
 		$.ajax({
-			url: '../ajax/empInfo.cls',
+			url: '/clsProj/ajax/empInfo.cls',
 			type: 'post',
 			dataType: 'json',
 			data: {
 				'eno' : tid
+				
 			},
+			
 			success: function(obj){
+			
 				/*
 					success 함수의 매개변수 의 의미
 					비동기 통신으로 요청을 하게 되면
@@ -46,7 +50,7 @@ $(document).ready(function(){
 						}
 					그래서 사용할 때는 매개변수를 제이슨 객체로 사용하면 된다.
 				*/
-				$('#title').html('[ <b>'(obj.name) + '</b> ] <small>사원상세정보</small>');
+			//	$('#title').html('[ <b>'(obj.name) + '</b> ] <small>사원상세정보</small>');
 				$('#eno').html(obj.eno);
 				$('#name').html(obj.name);
 				$('#mgr').html(obj.mgr);
@@ -57,8 +61,9 @@ $(document).ready(function(){
 				$('#dno').html(obj.dno);
 				$('#dname').html(obj.dname);
 				$('#loc').html(obj.loc);
-	
+
 				$('#content').css('display', '');
+				
 			},
 			error: function(){
 				alert('통신에러');
@@ -82,6 +87,8 @@ $(document).ready(function(){
 			</c:forEach>
 		</div>
 		<!-- 사원 상세 정보 태그 -->
+		<!-- append함수로 처리하는방법 -->
+		
 		<div class="w3-col w3-padding" id="content">
 			<h3 class="w3-center w3-blue w3-padding w3-margin-bottom">사원정보</h3>
 			<div class="w3-col w3-card w3-padding">
